@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatManager
+public static class PlayerStatManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static PlayerStatistics[] playerStats = new PlayerStatistics[4];
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class PlayerStatistics
+{
+    public int totalHealth = 10;
+    public int attackPower = 10;
+    public int jumpPower = 10;
+    public int speed = 10;
 }
