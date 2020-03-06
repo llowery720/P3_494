@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerJump : MonoBehaviour
+public class PlayerJumpS : MonoBehaviour
 {
     public PlayerController controller;
     public float jumpForce;
