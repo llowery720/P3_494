@@ -1,0 +1,1 @@
+Singleton Code from https://gamedev.stackexchange.com/questions/32861/whats-the-proper-way-to-use-static-objects-and-singletons-in-unity
