@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speedMultiplier;
+    private float speedMultiplier;
     private Rigidbody2D rb;
     private Gamepad gamepad;
     private SpriteRenderer playerSprite;
+
+    public int playerNumber;
 
     private bool facingRight = true;
     private bool checkFace = true;
@@ -24,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     {
         gamepad = Gamepad.current;
         Debug.Log(gamepad.name);
+
+        speedMultiplier = PlayerStatManager.playerStats[playerNumber].Speed;
 
         float horizontal_velocity = gamepad.leftStick.x.ReadValue();
         Vector2 current_velocity = rb.velocity;

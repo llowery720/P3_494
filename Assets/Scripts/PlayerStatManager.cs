@@ -14,9 +14,8 @@ public class PlayerStatManager: MonoBehaviour
 
         for(int i = 0; i < 4; i++)
         {
-            playerStats[i] = new PlayerStatistics(10, 10, 10, 10, 5);
+            playerStats[i] = new PlayerStatistics(10, 10, 4.0f, 3.0f, 5);
         }
-
 
         DontDestroyOnLoad(gameObject);
     }
@@ -27,12 +26,12 @@ public class PlayerStatManager: MonoBehaviour
     {
         public int Health;
         public int Attack;
-        public int Jump;
-        public int Speed;
+        public float Jump;
+        public float Speed;
 
         public int roundBonus;
 
-        public PlayerStatistics(int h, int a, int j, int s, int rb)
+        public PlayerStatistics(int h, int a, float j, float s, int rb)
         {
             Health = h;
             Attack = a;

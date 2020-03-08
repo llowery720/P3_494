@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerJump : MonoBehaviour
 {
-    public float jumpForce;
+    private float jumpForce;
+    private int playerNumber;
 
     private Rigidbody2D rb;
     public bool grounded;      // True if the player is standing on the ground
@@ -21,6 +22,7 @@ public class PlayerJump : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerNumber = GetComponent<PlayerMovement>().playerNumber;
     }
 
     private void FixedUpdate()
@@ -45,6 +47,8 @@ public class PlayerJump : MonoBehaviour
         {
             return;
         }
+
+        jumpForce = PlayerStatManager.playerStats[playerNumber].Jump;
         
         rb.velocity = Vector2.up * jumpForce;
         currentJump++;
