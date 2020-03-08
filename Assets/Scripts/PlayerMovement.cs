@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float speedMultiplier;
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     private Gamepad gamepad;
     private SpriteRenderer playerSprite;
 
@@ -17,19 +17,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         playerSprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        gamepad = Gamepad.current;
-        Debug.Log(gamepad.name);
+        // gamepad = Gamepad.current;
+        // Debug.Log(gamepad.name);
 
         speedMultiplier = PlayerStatManager.playerStats[playerNumber].Speed;
 
-        float horizontal_velocity = gamepad.leftStick.x.ReadValue();
+        float horizontal_velocity = 0f;/*gamepad.leftStick.x.ReadValue()*/
         Vector2 current_velocity = rb.velocity;
         current_velocity.x = horizontal_velocity * speedMultiplier;
         rb.velocity = current_velocity;

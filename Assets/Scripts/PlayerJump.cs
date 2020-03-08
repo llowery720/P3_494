@@ -8,7 +8,7 @@ public class PlayerJump : MonoBehaviour
     public float jumpForce;
     private int playerNumber;
 
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     public bool grounded;      // True if the player is standing on the ground
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -21,7 +21,7 @@ public class PlayerJump : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         playerNumber = GetComponent<PlayerMovement>().playerNumber;
     }
 
@@ -50,7 +50,7 @@ public class PlayerJump : MonoBehaviour
 
         jumpForce = PlayerStatManager.playerStats[playerNumber].Jump;
         
-        rb.velocity = Vector2.up * jumpForce;
+        rb.velocity = Vector3.up * jumpForce;
         currentJump++;
         StartCoroutine(JumpAnimator(0.07f));
     }

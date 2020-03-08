@@ -21,11 +21,8 @@ public class PlayerController : MonoBehaviour
     private PlayerDash dash;
     private PlayerJump jump;
 
-    public Rigidbody2D rb;
-
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<PlayerDash>();
         jump = GetComponent<PlayerJump>();
     }
@@ -50,7 +47,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (true)
         {

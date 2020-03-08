@@ -13,7 +13,7 @@ public class PlayerDash : MonoBehaviour
     public bool debug_gap;
     public bool debug_cooldown;
 
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     public int maxDashes;
     public int currentDash;
     public bool inDash;
@@ -23,7 +23,7 @@ public class PlayerDash : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         inDash = false;
         direction = 1;
@@ -50,8 +50,8 @@ public class PlayerDash : MonoBehaviour
             return;
         }
         inDash = true;
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0.0f;
+        rb.velocity = Vector3.zero;
+        rb.useGravity = false;
         currentDash++;
         rb.velocity = new Vector2(dashSpeed, 0) * direction;
 
@@ -67,9 +67,9 @@ public class PlayerDash : MonoBehaviour
             progress = (Time.time - start_time) / dashDuration;
             yield return null;
         }
-        rb.gravityScale = 1.0f;
+        rb.useGravity = true;
         inDash = false;
-        rb.velocity = new Vector2(rb.velocity.x * 0.5f, rb.velocity.y * 0.5f);
+        rb.velocity = new Vector3(rb.velocity.x * 0.5f, rb.velocity.y * 0.5f);
 
         StartCoroutine(Check_Consecutive_Dashes());
     }

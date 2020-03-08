@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
     private void Update()
     {
         percentage = (float)controller.health / (float)controller.maxHealth;
-        bar.localScale = new Vector3(percentage, 1.0f);
+        bar.localScale = new Vector3(percentage, 1.0f, 0.0f);
 
         if(percentage > 0.3f)
         {
