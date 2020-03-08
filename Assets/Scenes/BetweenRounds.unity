@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 51640061}
   - component: {fileID: 51640060}
   m_Layer: 0
-  m_Name: StatBank
+  m_Name: PlayersStatBank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15.7, y: -150}
+  m_AnchoredPosition: {x: -15.7, y: -165}
   m_SizeDelta: {x: 700, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &171946270
@@ -220,7 +220,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'A: Increase Health      B: Increase Speed
 
-    X: Increase Jump       Y: Increase Attack'
+    X: Increase Jump        Y: Increase Attack'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -289,9 +289,9 @@ MonoBehaviour:
   m_margin: {x: 12.269943, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 171946270}
-    characterCount: 83
+    characterCount: 84
     spriteCount: 0
-    spaceCount: 22
+    spaceCount: 23
     wordCount: 12
     linkCount: 0
     lineCount: 2
@@ -859,7 +859,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.46226418, g: 0.21586864, b: 0.21586864, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.38960445, b: 0.509434, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1250,7 +1250,7 @@ GameObject:
   - component: {fileID: 2130327280}
   - component: {fileID: 2130327279}
   m_Layer: 0
-  m_Name: StatChanger
+  m_Name: StatCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2130327278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86a71a2a22a28f45a38fdd22abc79a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 517fcf3fc4c40bf45bc409910f417fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerPanels:
