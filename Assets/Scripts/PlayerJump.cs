@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerJump : MonoBehaviour
 {
-    private float jumpForce;
+    public float jumpForce;
     private int playerNumber;
 
     private Rigidbody2D rb;

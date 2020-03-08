@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speedMultiplier;
+    public float speedMultiplier;
     private Rigidbody2D rb;
     private Gamepad gamepad;
     private SpriteRenderer playerSprite;
