@@ -1,0 +1,4 @@
+Our game Paradym is a round based 2d arena multiplayer fighting game with individualized
+player progression between rounds. Our spike mechanic is the ability for players to upgrade
+various character stats between rounds such as jump height and running speed in order to customize
+their character to their playstyle and make them stand out from the competetion. 
