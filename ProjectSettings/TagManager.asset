@@ -9,6 +9,8 @@ TagManager:
   - Attack
   - Health
   - Wall
+  - Bullet
+  - Bank
   layers:
   - Default
   - TransparentFX

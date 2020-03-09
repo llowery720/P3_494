@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using UnityEngine.InputSystem;
 // text mesh system
@@ -10,12 +11,16 @@ using UnityEngine.UI;
 public class StatCounter : MonoBehaviour
 {
     public GameObject[] playerPanels;
+    public GameObject winText, directions;
+    int playerCount = 4;
+    public int maxWins = 4;
+    bool gameOver = false;
 
     private float[] buttonDelay = new float[4];
 
     private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
 
-
+    int currentPlayer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +31,10 @@ public class StatCounter : MonoBehaviour
             buttonDelay[i] = .5f;
 
             // don't show inactive game panels
-            if (i >= gamePads.Count)
+            if (i >= gamePads.Count && i > 1)
             {
                 playerPanels[i].SetActive(false);
+                playerCount--;
             }
         }
     }
@@ -36,6 +42,25 @@ public class StatCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gameOver && Input.GetKeyDown(KeyCode.Space)) {
+            Reset();
+        }
+        for(int i = 0; i < playerPanels.Length; i++){
+            if(PlayerStatManager.playerStats[i].Wins == maxWins) {
+                EndGame(i + 1);
+                return;
+            }
+        }
+        if(currentPlayer > playerCount - 1) {
+            for (int i = 0; i < playerPanels.Length; i++) PlayerStatManager.playerStats[i].roundBonus = 3;
+            SceneManager.LoadScene("Raj");
+        }
+        if(gamePads.Count == 0) {
+            KeyActionUpdate(currentPlayer);
+            UpdateStatText(playerPanels[currentPlayer], currentPlayer);
+            if(PlayerStatManager.playerStats[currentPlayer].roundBonus == 0) ++currentPlayer;
+            return;
+        }
         for (int i = 0; i < playerPanels.Length; i++)
         {
             ButtonActionUpdate(i);
@@ -82,14 +107,37 @@ public class StatCounter : MonoBehaviour
         }
     }
 
+    void KeyActionUpdate(int num){
+        if (PlayerStatManager.playerStats[num].roundBonus > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.A)) // Increase Health
+            {
+                PlayerStatManager.playerStats[num].Health++;
+                SubtractRoundPoints(num);
+            }
+            else if (Input.GetKeyDown(KeyCode.B)) // Increase 
+            {
+                PlayerStatManager.playerStats[num].Speed++;
+                SubtractRoundPoints(num);
+            }
+            else if (Input.GetKeyDown(KeyCode.X))
+            {
+                PlayerStatManager.playerStats[num].Jump++;
+                SubtractRoundPoints(num);
+            }
+            else if (Input.GetKeyDown(KeyCode.Y))
+            {
+                PlayerStatManager.playerStats[num].Attack++;
+                SubtractRoundPoints(num);
+            }
+        }
+    }
+
     void SubtractRoundPoints(int playerNum)
     {
         PlayerStatManager.playerStats[playerNum].roundBonus--;
         buttonDelay[playerNum] = 0f;
     }
-
-    
-    
 
     // Takes in a canvas object and a number corresponding to the 0-indexed entry for the player
     // Updates on-screen elements based on new values from PlayerStatManager
@@ -101,7 +149,11 @@ public class StatCounter : MonoBehaviour
 
             Text childLabelField = child.GetComponent<Text>();
 
-            if (child.name == "Health")
+            if (child.name == "PlayerNum")
+            {
+                childLabelField.text = "P" + (num + 1).ToString() + ": " + PlayerStatManager.playerStats[num].Wins + "W";
+            }
+            else if (child.name == "Health")
             {
                 childLabelField.text = "Health: " + PlayerStatManager.playerStats[num].Health;
             }
@@ -122,6 +174,29 @@ public class StatCounter : MonoBehaviour
             {
                 childLabelField.text = PlayerStatManager.playerStats[num].roundBonus.ToString();
             }
+        }
+    }
+
+    void EndGame(int playerNum){
+        gameOver = true;
+        for(int i = 0; i < playerPanels.Length; i++){
+            playerPanels[i].SetActive(false);
+        }
+        directions.SetActive(false);
+        winText.SetActive(true);
+        winText.GetComponent<Text>().text = "Player " + playerNum + " Wins!\n\'Space\' to restart";
+    }
+
+    void Reset() {
+        for(int i = 0; i < playerCount; i++){
+            playerPanels[i].SetActive(true);
+        }
+        directions.SetActive(true);
+        winText.SetActive(false);
+        gameOver = false;
+
+        for(int i = 0; i < 4; i++) {
+                PlayerStatManager.playerStats[i] = new PlayerStatManager.PlayerStatistics(3, 5, 3f, 4f, 3);
         }
     }
 }

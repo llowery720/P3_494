@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 39e0a8813d3869547998fca2675c5cd0
   - enabled: 1
     path: Assets/Scenes/BetweenRounds.unity
     guid: d2c680b093db0574186f61a2d097a84c
+  - enabled: 1
+    path: Assets/Scenes/Raj.unity
+    guid: 626752c2bdf0e471aa92f0da7b74b756
   m_configObjects: {}

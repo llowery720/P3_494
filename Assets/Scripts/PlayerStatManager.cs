@@ -10,26 +10,29 @@ public class PlayerStatManager: MonoBehaviour
 
     public static PlayerStatistics[] playerStats;
 
-
-
-
     void Awake()
     {
         // singleton enforcement
-        if (FindObjectsOfType(typeof(PlayerStatManager)).Length > 1)
-        {
-            Debug.Log("PSM: Already found instance of script in scene; destroying.");
-            DestroyImmediate(gameObject);
+        // if (FindObjectsOfType(typeof(PlayerStatManager)).Length > 1)
+        // {
+        //     Debug.Log("PSM: Already found instance of script in scene; destroying.");
+
+        //         DestroyImmediate(gameObject);
+        // }
+
+        if(_instance != null && _instance != this) {
+            GameObject.Destroy(this.gameObject);
         }
+        else {
+            _instance = this;
 
-        playerStats = new PlayerStatistics[4];
+            playerStats = new PlayerStatistics[4];
 
-        for(int i = 0; i < 4; i++)
-        {
-            playerStats[i] = new PlayerStatistics(10, 10, 4.0f, 3.0f, 5);
-        }
-
-        DontDestroyOnLoad(gameObject);
+            for(int i = 0; i < 4; i++) {
+                playerStats[i] = new PlayerStatistics(3, 5, 3f, 4f, 3);
+            }
+            DontDestroyOnLoad(gameObject);
+        } 
     }
 
     public class PlayerStatistics
@@ -40,6 +43,7 @@ public class PlayerStatManager: MonoBehaviour
         public float Speed;
 
         public int roundBonus;
+        public int Wins;
 
         public PlayerStatistics(int h, int a, float j, float s, int rb)
         {
@@ -47,8 +51,8 @@ public class PlayerStatManager: MonoBehaviour
             Attack = a;
             Jump = j;
             Speed = s;
-
             roundBonus = rb;
+            Wins = 0;
         }
     }
 }

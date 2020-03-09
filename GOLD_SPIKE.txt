@@ -1,0 +1,1 @@
+Our idea was to create a fighting game with RPG-like elements of progression. Our spike mechanic gives the player the ability to upgrade attributes between rounds, choosing between increasing health, speed, jump height, or attack rate. 

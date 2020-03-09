@@ -23,6 +23,7 @@ public class PlayerJump : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerNumber = GetComponent<PlayerMovement>().playerNumber;
+        jumpForce = PlayerStatManager.playerStats[playerNumber - 1].Jump;
     }
 
     private void FixedUpdate()
