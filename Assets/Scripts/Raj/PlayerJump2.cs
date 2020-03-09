@@ -27,11 +27,18 @@ public class PlayerJump2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool jumpButtonPressed;
+        bool jumpButtonPressed = false;
 
         if (gamePads.Count == 0)
         {
-            jumpButtonPressed = Input.GetKeyDown(KeyCode.Z);
+            if(playerNum == 1) {
+                jumpButtonPressed = Input.GetKeyDown(KeyCode.Period);
+            }
+            else if (playerNum == 2)
+            {
+                jumpButtonPressed = Input.GetKeyDown(KeyCode.V);
+            }
+            
         }
         else
         {

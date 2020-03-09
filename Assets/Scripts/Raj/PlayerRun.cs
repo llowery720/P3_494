@@ -8,6 +8,7 @@ public class PlayerRun : MonoBehaviour
 {
     Rigidbody rigid;
     PlayerJump2 pj;
+    SpriteRenderer sr;
 
     public bool paused = false;
     public bool transitioning = false;
@@ -31,6 +32,7 @@ public class PlayerRun : MonoBehaviour
     void Awake(){
         rigid = this.GetComponent<Rigidbody>();
         pj = this.GetComponent<PlayerJump2>();
+        sr = this.GetComponent<SpriteRenderer>();
     }
 
     void Update() {
@@ -38,12 +40,18 @@ public class PlayerRun : MonoBehaviour
         if(!paused){
             Vector3 newVelocity = rigid.velocity;
 
-            float horiz_move;
+            float horiz_move = 0f;
             // float vert_move;
 
             if (gamePads.Count == 0)
             {
-                horiz_move = Input.GetAxis("Horizontal");
+                if(playerNum == 1) {
+                    horiz_move = Input.GetAxis("Horizontal1");
+                }
+                else if(playerNum == 2) {
+                    horiz_move = Input.GetAxis("Horizontal2");
+                }
+                
             }
             else
             {
@@ -53,15 +61,34 @@ public class PlayerRun : MonoBehaviour
             if (!SpeedGainAccess || !SpeedGainToggle){
 
                 if(horiz_move != 0){
-                    newVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
+                    if (playerNum == 1)
+                    {
+                        newVelocity.x = Input.GetAxis("Horizontal1") * moveSpeed;
+                    }
+                    else if (playerNum == 2)
+                    {
+                        newVelocity.x = Input.GetAxis("Horizontal2") * moveSpeed;
+                    }
+                    
                 }
                 else{
                     newVelocity.x = pj.jumpMomentum;
                 }
+
+                if (horiz_move > 0)
+                {
+                    sr.flipX = false;
+                }
+                else if (horiz_move < 0)
+                {
+                    sr.flipX = true;
+                }
+
                 rigid.velocity = newVelocity;
             }
             else{
                 if(horiz_move > 0){
+                    sr.flipX = false;
                     interpolation = acceleration * Time.deltaTime;
                     if(newVelocity.x < MaxSpeed){
                         newVelocity.x = Mathf.Lerp(newVelocity.x, MaxSpeed, interpolation);
@@ -71,6 +98,7 @@ public class PlayerRun : MonoBehaviour
                     }
                 }
                 else if(horiz_move < 0){
+                    sr.flipX = true;
                     interpolation = acceleration * Time.deltaTime;
                     if(newVelocity.x > -MaxSpeed){
                         newVelocity.x = Mathf.Lerp(newVelocity.x, -MaxSpeed, interpolation);
