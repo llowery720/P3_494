@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
 public class PlayerJump2 : MonoBehaviour
 {
     public bool grounded;
@@ -10,7 +12,10 @@ public class PlayerJump2 : MonoBehaviour
     public float fallMultiplier;
     public float lowJumpMultiplier;
     public bool paused = false;
+    public int playerNum;
     Rigidbody rb;
+
+    private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +27,22 @@ public class PlayerJump2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!paused){
+        bool jumpButtonPressed;
+
+        if (gamePads.Count == 0)
+        {
+            jumpButtonPressed = Input.GetKeyDown(KeyCode.Z);
+        }
+        else
+        {
+            jumpButtonPressed = gamePads[playerNum - 1].aButton.wasPressedThisFrame;
+        }
+
+
+        if (!paused){
             grounded = isGrounded();
              //if (grounded) jumpMomentum = 0;
-            if (Input.GetKeyDown(KeyCode.Z) && grounded){
+            if (jumpButtonPressed && grounded){
                 jump();
             }
             if (rb.velocity.y < 0){

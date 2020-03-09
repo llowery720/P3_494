@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
 public class PlayerRun : MonoBehaviour
 {
     Rigidbody rigid;
@@ -17,7 +19,14 @@ public class PlayerRun : MonoBehaviour
 
     public float moveSpeed = 5f;
 
+    // is this Player 1, 2, 3?
+    public int playerNum;
+
     private float interpolation;
+
+
+    private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
+
 
     void Awake(){
         rigid = this.GetComponent<Rigidbody>();
@@ -28,8 +37,22 @@ public class PlayerRun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C) && SpeedGainAccess) SpeedGainToggle = ! SpeedGainToggle;
         if(!paused){
             Vector3 newVelocity = rigid.velocity;
-            if(!SpeedGainAccess || !SpeedGainToggle){
-                if(Input.GetAxis("Horizontal") != 0){
+
+            float horiz_move;
+            // float vert_move;
+
+            if (gamePads.Count == 0)
+            {
+                horiz_move = Input.GetAxis("Horizontal");
+            }
+            else
+            {
+                horiz_move = gamePads[playerNum - 1].leftStick.x.ReadValue();
+            }
+
+            if (!SpeedGainAccess || !SpeedGainToggle){
+
+                if(horiz_move != 0){
                     newVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
                 }
                 else{
@@ -38,7 +61,7 @@ public class PlayerRun : MonoBehaviour
                 rigid.velocity = newVelocity;
             }
             else{
-                if(Input.GetAxis("Horizontal") > 0){
+                if(horiz_move > 0){
                     interpolation = acceleration * Time.deltaTime;
                     if(newVelocity.x < MaxSpeed){
                         newVelocity.x = Mathf.Lerp(newVelocity.x, MaxSpeed, interpolation);
@@ -47,7 +70,7 @@ public class PlayerRun : MonoBehaviour
                         newVelocity.x = MaxSpeed;
                     }
                 }
-                else if(Input.GetAxis("Horizontal") < 0){
+                else if(horiz_move < 0){
                     interpolation = acceleration * Time.deltaTime;
                     if(newVelocity.x > -MaxSpeed){
                         newVelocity.x = Mathf.Lerp(newVelocity.x, -MaxSpeed, interpolation);

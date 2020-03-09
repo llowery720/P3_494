@@ -24,6 +24,12 @@ public class StatCounter : MonoBehaviour
         {
             UpdateStatText(playerPanels[i], i);
             buttonDelay[i] = .5f;
+
+            // don't show inactive game panels
+            if (i >= gamePads.Count)
+            {
+                playerPanels[i].SetActive(false);
+            }
         }
     }
 
