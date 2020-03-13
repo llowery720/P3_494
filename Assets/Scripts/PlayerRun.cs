@@ -66,17 +66,26 @@ public class PlayerRun : MonoBehaviour
             if (!SpeedGainAccess || !SpeedGainToggle){
 
                 if(horiz_move != 0){
-                    if (playerNum == 1)
+                    if (gamePads.Count == 0)
                     {
-                        newVelocity.x = Input.GetAxis("Horizontal1") * moveSpeed;
+                        if (playerNum == 1)
+                        {
+                            newVelocity.x = Input.GetAxis("Horizontal1") * moveSpeed;
+                        }
+                        else if (playerNum == 2)
+                        {
+                            newVelocity.x = Input.GetAxis("Horizontal2") * moveSpeed;
+                        }
                     }
-                    else if (playerNum == 2)
+                    else
                     {
-                        newVelocity.x = Input.GetAxis("Horizontal2") * moveSpeed;
+                        newVelocity.x = gamePads[playerNum - 1].leftStick.x.ReadValue() * moveSpeed;
                     }
-                    
+
+
                 }
-                else{
+                else
+                {
                     newVelocity.x = pj.jumpMomentum;
                 }
 

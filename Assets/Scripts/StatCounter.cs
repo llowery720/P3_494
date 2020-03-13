@@ -45,28 +45,38 @@ public class StatCounter : MonoBehaviour
         if(gameOver && Input.GetKeyDown(KeyCode.Space)) {
             Reset();
         }
+
         for(int i = 0; i < playerPanels.Length; i++){
             if(PlayerStatManager.playerStats[i].Wins == maxWins) {
                 EndGame(i + 1);
                 return;
             }
         }
+
         if(currentPlayer > playerCount - 1) {
             for (int i = 0; i < playerPanels.Length; i++) PlayerStatManager.playerStats[i].roundBonus = 3;
             SceneManager.LoadScene("Raj");
         }
+
         if(gamePads.Count == 0) {
             KeyActionUpdate(currentPlayer);
             UpdateStatText(playerPanels[currentPlayer], currentPlayer);
             if(PlayerStatManager.playerStats[currentPlayer].roundBonus == 0) ++currentPlayer;
             return;
         }
+
         for (int i = 0; i < playerPanels.Length; i++)
         {
             ButtonActionUpdate(i);
             UpdateStatText(playerPanels[i], i);
 
             buttonDelay[i] += Time.deltaTime;
+        }
+
+        if (gamePads.Count > 0 && gamePads[0].startButton.isPressed)
+        {
+            for (int i = 0; i < playerPanels.Length; i++) PlayerStatManager.playerStats[i].roundBonus = 3;
+            SceneManager.LoadScene("Raj");
         }
     }
 

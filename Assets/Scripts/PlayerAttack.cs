@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
 public class PlayerAttack : MonoBehaviour
 {
 	public GameObject projectile;
@@ -12,6 +14,9 @@ public class PlayerAttack : MonoBehaviour
     public float reloadTime = 5f;
     public float attackRate;
     bool isReloading = false;
+
+    private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,15 +30,29 @@ public class PlayerAttack : MonoBehaviour
     {
         if(isReloading) return;
 
-        if(playerNum == 1) {
-            if (Input.GetKeyDown(KeyCode.Period)){
-                Shoot();
+        if (gamePads.Count == 0)
+        {
+            if (playerNum == 1)
+            {
+                if (Input.GetKeyDown(KeyCode.Period))
+                {
+                    Shoot();
+                }
+            }
+            else if (playerNum == 2)
+            {
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    Shoot();
+                }
             }
         }
-        else if(playerNum == 2) {
-            if (Input.GetKeyDown(KeyCode.B)){
+        else
+        {
+            if(gamePads[playerNum - 1].bButton.wasPressedThisFrame)
+            {
                 Shoot();
-    	    }
+            }
         }
     	
     }
