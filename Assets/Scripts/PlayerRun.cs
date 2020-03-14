@@ -41,92 +41,84 @@ public class PlayerRun : MonoBehaviour
 
     void Update() {
 
-        if (Input.GetKeyDown(KeyCode.C) && SpeedGainAccess) SpeedGainToggle = ! SpeedGainToggle;
-        if(!paused){
-            Vector3 newVelocity = rigid.velocity;
+        if (Input.GetKeyDown(KeyCode.C) && SpeedGainAccess)
+            SpeedGainToggle = !SpeedGainToggle;
+        if (paused)
+            return;
 
-            float horiz_move = 0f;
-            // float vert_move;
+        Vector3 newVelocity = rigid.velocity;
 
-            if (gamePads.Count == 0)
+        float horiz_move = 0f;
+        // float vert_move;
+
+        if (gamePads.Count == 0)
+            horiz_move = Input.GetAxis("Horizontal" + playerNum.ToString());
+        else
+            horiz_move = gamePads[playerNum - 1].leftStick.x.ReadValue();
+
+        if (Mathf.Abs(horiz_move) < 0.1f) //Prevents stick drift
+        {
+            newVelocity.x = 0;
+            rigid.velocity = newVelocity;
+            return;
+        }
+
+        if (!SpeedGainAccess || !SpeedGainToggle)
+        {
+            if (horiz_move != 0)
             {
-                if(playerNum == 1) {
-                    horiz_move = Input.GetAxis("Horizontal1");
-                }
-                else if(playerNum == 2) {
-                    horiz_move = Input.GetAxis("Horizontal2");
-                }
-                
+                newVelocity.x = horiz_move * moveSpeed;
             }
             else
             {
-                horiz_move = gamePads[playerNum - 1].leftStick.x.ReadValue();
+                newVelocity.x = pj.jumpMomentum;
             }
 
-            if (!SpeedGainAccess || !SpeedGainToggle){
+            if (horiz_move > 0)
+            {
+                sr.flipX = false;
+            }
+            else if (horiz_move < 0)
+            {
+                sr.flipX = true;
+            }
 
-                if(horiz_move != 0){
-                    if (gamePads.Count == 0)
-                    {
-                        if (playerNum == 1)
-                        {
-                            newVelocity.x = Input.GetAxis("Horizontal1") * moveSpeed;
-                        }
-                        else if (playerNum == 2)
-                        {
-                            newVelocity.x = Input.GetAxis("Horizontal2") * moveSpeed;
-                        }
-                    }
-                    else
-                    {
-                        newVelocity.x = gamePads[playerNum - 1].leftStick.x.ReadValue() * moveSpeed;
-                    }
+            rigid.velocity = newVelocity;
+        }
+        else
+        {
+            if (horiz_move > 0)
+            {
+                sr.flipX = false;
 
-
+                interpolation = acceleration * Time.deltaTime;
+                if (newVelocity.x < MaxSpeed)
+                {
+                    newVelocity.x = Mathf.Lerp(newVelocity.x, MaxSpeed, interpolation);
                 }
                 else
                 {
-                    newVelocity.x = pj.jumpMomentum;
+                    newVelocity.x = MaxSpeed;
                 }
-
-                if (horiz_move > 0)
-                {
-                    sr.flipX = false;
-                }
-                else if (horiz_move < 0)
-                {
-                    sr.flipX = true;
-                }
-
-                rigid.velocity = newVelocity;
             }
-            else{
-                if(horiz_move > 0){
-                    sr.flipX = false;
-
-                    interpolation = acceleration * Time.deltaTime;
-                    if(newVelocity.x < MaxSpeed){
-                        newVelocity.x = Mathf.Lerp(newVelocity.x, MaxSpeed, interpolation);
-                    }
-                    else{
-                        newVelocity.x = MaxSpeed;
-                    }
+            else if (horiz_move < 0)
+            {
+                sr.flipX = true;
+                interpolation = acceleration * Time.deltaTime;
+                if (newVelocity.x > -MaxSpeed)
+                {
+                    newVelocity.x = Mathf.Lerp(newVelocity.x, -MaxSpeed, interpolation);
                 }
-                else if(horiz_move < 0){
-                    sr.flipX = true;
-                    interpolation = acceleration * Time.deltaTime;
-                    if(newVelocity.x > -MaxSpeed){
-                        newVelocity.x = Mathf.Lerp(newVelocity.x, -MaxSpeed, interpolation);
-                    }
-                    else{
-                        newVelocity.x = -MaxSpeed;
-                    }
+                else
+                {
+                    newVelocity.x = -MaxSpeed;
                 }
-                else{
-                    newVelocity.x = Mathf.Lerp(newVelocity.x, 0, (interpolation * 2));
-                }
-                rigid.velocity = newVelocity;
             }
+            else
+            {
+                newVelocity.x = Mathf.Lerp(newVelocity.x, 0, (interpolation * 2));
+            }
+            rigid.velocity = newVelocity;
         }
     }
 

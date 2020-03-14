@@ -43,7 +43,7 @@ public class PlayerJump2 : MonoBehaviour
         }
         else
         {
-            jumpButtonPressed = gamePads[playerNum - 1].aButton.wasPressedThisFrame;
+            jumpButtonPressed = gamePads[playerNum - 1].aButton.wasPressedThisFrame || gamePads[playerNum - 1].rightTrigger.wasPressedThisFrame;
         }
 
 

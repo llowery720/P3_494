@@ -125,7 +125,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761012933999843351}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9b474f8fc80ab594e880f98e1befc19e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grounded: 0
   jumpForce: 4
-  jumpMomentum: 2
+  jumpMomentum: 0
   fallMultiplier: 1
   lowJumpMultiplier: 0.5
   paused: 0
@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   playerNumber: 0
+  duration: 0.25
 --- !u!114 &761012933999843358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,3 +218,5 @@ MonoBehaviour:
   firePoint: {fileID: 761012933854876164}
   speed: 5
   playerNum: 0
+  reloadTime: 5
+  attackRate: 1
