@@ -11,7 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BetweenRounds.unity
     guid: d2c680b093db0574186f61a2d097a84c
+  - enabled: 0
+    path: Assets/Scenes/Trevor.unity
+    guid: 626752c2bdf0e471aa92f0da7b74b756
+  - enabled: 0
+    path: Assets/Scenes/Fight.unity
+    guid: ee1db96fd55a86f428be98baae1a14ff
   - enabled: 1
     path: Assets/Scenes/Raj.unity
-    guid: 626752c2bdf0e471aa92f0da7b74b756
+    guid: 885a5525d4abcac46b822abac967e369
   m_configObjects: {}

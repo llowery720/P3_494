@@ -36,13 +36,13 @@ public class PlayerAttack : MonoBehaviour
         if ((playerNum == 1 && Input.GetKeyDown(KeyCode.Period)) || (playerNum == 2 && Input.GetKeyDown(KeyCode.B)))
             ShootForward();
 
-        float shootDirectionX = gamePads[playerNum - 1].rightStick.x.ReadValue();
-        float shootDirectionY = gamePads[playerNum - 1].rightStick.y.ReadValue();
+        //float shootDirectionX = gamePads[playerNum - 1].rightStick.x.ReadValue();
+        //float shootDirectionY = gamePads[playerNum - 1].rightStick.y.ReadValue();
 
-        if (shootDirectionX != 0.0 || shootDirectionY != 0.0)
-        {
-            Shoot(shootDirectionX, shootDirectionY);
-        }
+        //if (shootDirectionX != 0.0 || shootDirectionY != 0.0)
+        //{
+        //    Shoot(shootDirectionX, shootDirectionY);
+        //}
 
     }
 

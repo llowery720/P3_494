@@ -11,9 +11,12 @@ using UnityEngine.UI;
 public class StatCounter : MonoBehaviour
 {
     public GameObject[] playerPanels;
+
     public GameObject winText, directions;
-    int playerCount = 4;
+
+    int playerCount = 2;
     public int maxWins = 4;
+
     bool gameOver = false;
 
     private float[] buttonDelay = new float[4];
@@ -22,9 +25,16 @@ public class StatCounter : MonoBehaviour
 
     int currentPlayer = 0;
 
+
+    private string[] wordBank = new string[4] { "Health", "Attack", "Speed", "Jump" };
+    private int currentIndex = 0;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        // currentPlayer = 0;
+
         for (int i = 0; i < playerPanels.Length; i++)
         {
             UpdateStatText(playerPanels[i], i);
@@ -53,89 +63,102 @@ public class StatCounter : MonoBehaviour
             }
         }
 
+
+        if(currentPlayer == 0)
+        {
+            for (int i = 0; i < playerPanels[1].transform.childCount; i++)
+            {
+                GameObject child = playerPanels[1].transform.GetChild(i).gameObject;
+
+                Text childLabelField = child.GetComponent<Text>();
+
+                childLabelField.color = Color.gray;
+            }
+            for (int i = 0; i < playerPanels[0].transform.childCount; i++)
+            {
+                GameObject child = playerPanels[0].transform.GetChild(i).gameObject;
+
+                Text childLabelField = child.GetComponent<Text>();
+
+                childLabelField.color = Color.white;
+            }
+        }
+        else if(currentPlayer == 1)
+        {
+            for (int i = 0; i < playerPanels[0].transform.childCount; i++)
+            {
+                GameObject child = playerPanels[0].transform.GetChild(i).gameObject;
+
+                Text childLabelField = child.GetComponent<Text>();
+
+                childLabelField.color = Color.gray;
+            }
+            for (int i = 0; i < playerPanels[1].transform.childCount; i++)
+            {
+                GameObject child = playerPanels[1].transform.GetChild(i).gameObject;
+
+                Text childLabelField = child.GetComponent<Text>();
+
+                childLabelField.color = Color.white;
+            }
+        }
+
         if(currentPlayer > playerCount - 1) {
             for (int i = 0; i < playerPanels.Length; i++) PlayerStatManager.playerStats[i].roundBonus = 3;
             SceneManager.LoadScene("Raj");
         }
 
-        if(gamePads.Count == 0) {
+        if(gamePads.Count == 0 && currentPlayer <= playerCount - 1) {
             KeyActionUpdate(currentPlayer);
+            Debug.Log(currentPlayer);
             UpdateStatText(playerPanels[currentPlayer], currentPlayer);
+
             if(PlayerStatManager.playerStats[currentPlayer].roundBonus == 0) ++currentPlayer;
             return;
-        }
-
-        for (int i = 0; i < playerPanels.Length; i++)
-        {
-            ButtonActionUpdate(i);
-            UpdateStatText(playerPanels[i], i);
-
-            buttonDelay[i] += Time.deltaTime;
-        }
-
-        if (gamePads.Count > 0 && gamePads[0].startButton.isPressed)
-        {
-            for (int i = 0; i < playerPanels.Length; i++) PlayerStatManager.playerStats[i].roundBonus = 3;
-            SceneManager.LoadScene("Raj");
         }
     }
 
     // Takes in an integer value corresponding to a controller and queries the gamepad for button presses
     // If player has round points left, increase the value of the chosen field and remove a bonus point
-    void ButtonActionUpdate(int num)
-    {
-        Gamepad current = null;
-
-        if (num < gamePads.Count)
-        {
-            current = gamePads[num];
-        }
-
-
-        if (current != null && PlayerStatManager.playerStats[num].roundBonus > 0 && buttonDelay[num] > .3f)
-        {
-            if (current.aButton.isPressed) // Increase Health
-            {
-                PlayerStatManager.playerStats[num].Health++;
-                SubtractRoundPoints(num);
-            }
-            else if (current.bButton.isPressed) // Increase 
-            {
-                PlayerStatManager.playerStats[num].Speed++;
-                SubtractRoundPoints(num);
-            }
-            else if (current.xButton.isPressed)
-            {
-                PlayerStatManager.playerStats[num].Jump++;
-                SubtractRoundPoints(num);
-            }
-            else if (current.yButton.isPressed)
-            {
-                PlayerStatManager.playerStats[num].Attack++;
-                SubtractRoundPoints(num);
-            }
-        }
-    }
-
     void KeyActionUpdate(int num){
-        if (PlayerStatManager.playerStats[num].roundBonus > 0)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            if (Input.GetKeyDown(KeyCode.A)) // Increase Health
+            currentIndex--;
+            if(currentIndex < 0)
+            {
+                currentIndex = 3;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            currentIndex++;
+            if (currentIndex > 3)
+            {
+                currentIndex = 0;
+            }
+        }
+
+        directions.GetComponent<Text>().text = "<     Add 1 Point to " + wordBank[currentIndex] + "     >\n\n Press Space to Confirm";
+
+
+        if (PlayerStatManager.playerStats[num].roundBonus > 0 && (Input.GetKeyDown(KeyCode.Space)))
+        {
+            if (directions.GetComponent<Text>().text.Contains("Health")) // Increase Health
             {
                 PlayerStatManager.playerStats[num].Health++;
                 SubtractRoundPoints(num);
             }
-            else if (Input.GetKeyDown(KeyCode.B)) // Increase 
+            else if (directions.GetComponent<Text>().text.Contains("Speed")) // Increase 
             {
                 PlayerStatManager.playerStats[num].Speed++;
                 SubtractRoundPoints(num);
             }
-            else if (Input.GetKeyDown(KeyCode.X))
+            else if (directions.GetComponent<Text>().text.Contains("Jump"))
             {
                 PlayerStatManager.playerStats[num].Jump++;
                 SubtractRoundPoints(num);
             }
-            else if (Input.GetKeyDown(KeyCode.Y))
+            else if (directions.GetComponent<Text>().text.Contains("Attack"))
             {
                 PlayerStatManager.playerStats[num].Attack++;
                 SubtractRoundPoints(num);
@@ -183,6 +206,14 @@ public class StatCounter : MonoBehaviour
             else if (child.name == "BoostNum")
             {
                 childLabelField.text = PlayerStatManager.playerStats[num].roundBonus.ToString();
+            }
+
+            if (directions.GetComponent<Text>().text.Contains(child.name)){
+                childLabelField.color = new Color(255, 215, 0);
+            }
+            else
+            {
+                childLabelField.color = Color.white;
             }
         }
     }
