@@ -6,16 +6,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-	public GameObject projectile;
+	public GameObject projectile, weapon;
     SpriteRenderer sr;
 
 	public Transform firePoint;
 	public float speed = 3.0f;
     public int playerNum;
     public float reloadTime = 5f;
-    public float attackRate;
+    public float attackRate, swingDuration;
 
-    bool isReloading = false;
+    bool isReloading = false, isSwinging = false;
 
     private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
 
@@ -33,8 +33,11 @@ public class PlayerAttack : MonoBehaviour
         if (isReloading)
             return;
 
-        if ((playerNum == 1 && Input.GetKeyDown(KeyCode.Period)) || (playerNum == 2 && Input.GetKeyDown(KeyCode.B)))
-            ShootForward();
+        if ((playerNum == 1 && Input.GetKeyDown(KeyCode.Period)) || (playerNum == 2 && Input.GetKeyDown(KeyCode.B))) {
+            //ShootForward();
+            StartCoroutine(SwingForward());
+        }
+            
 
         //float shootDirectionX = gamePads[playerNum - 1].rightStick.x.ReadValue();
         //float shootDirectionY = gamePads[playerNum - 1].rightStick.y.ReadValue();
@@ -80,5 +83,23 @@ public class PlayerAttack : MonoBehaviour
         isReloading = true;
         yield return new WaitForSeconds(reloadTime / attackRate);
         isReloading = false;
+    }
+
+    IEnumerator SwingForward() {
+        Debug.Log("aya");
+        isSwinging = true;
+        GameObject swing;
+        if(!sr.flipX) {
+            swing = Instantiate(weapon, firePoint.position + Vector3.right * 0.25f, firePoint.rotation);
+        }
+        else {
+            swing = Instantiate(weapon, firePoint.position + Vector3.left * 0.25f, firePoint.rotation);
+        }
+        swing.transform.parent = transform;
+        yield return new WaitForSeconds(swingDuration);
+        Destroy(swing);
+        Debug.Log("yeet");
+
+        isSwinging = false;
     }
 }
