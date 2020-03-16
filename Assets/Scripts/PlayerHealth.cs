@@ -30,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other) {
-     	if (other.tag == "Bullet"){
+     	if (other.tag == "Sword"){
             StartCoroutine(Flash());
             health -= 10;
             if(health > 0){
