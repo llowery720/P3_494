@@ -209,7 +209,7 @@ MonoBehaviour:
   playerNum: 0
   reloadTime: 5
   attackRate: 1
-  swingDuration: 0.1
+  swingDuration: 0.5
 --- !u!136 &3358292670743871860
 CapsuleCollider:
   m_ObjectHideFlags: 0

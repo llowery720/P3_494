@@ -15,7 +15,6 @@ public class PlayerRun : MonoBehaviour
     
     public bool SpeedGainAccess = false;
     public bool SpeedGainToggle = false;
-    public bool beingKnocked = false;
     public float acceleration = 2.0f;
     public float MaxSpeed = 12f;
 
@@ -41,8 +40,7 @@ public class PlayerRun : MonoBehaviour
     }
 
     void Update() {
-        if(beingKnocked) return;
-        
+
         if (Input.GetKeyDown(KeyCode.C) && SpeedGainAccess)
             SpeedGainToggle = !SpeedGainToggle;
         if (paused)

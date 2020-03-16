@@ -33,7 +33,7 @@ public class PlayerJump2 : MonoBehaviour
         if (gamePads.Count == 0)
         {
             if(playerNum == 1) {
-                jumpButtonPressed = Input.GetKeyDown(KeyCode.L);
+                jumpButtonPressed = Input.GetKeyDown(KeyCode.Comma);
             }
             else if (playerNum == 2)
             {

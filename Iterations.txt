@@ -1,0 +1,11 @@
+The main points of feedback on our spike were that the upgrade menu had too much text and a poor control scheme, there was no way to tell how much health each player had, the speed and jump upgrades did not feel meaningful, the health and attack upgrades cancelled each other out, and that the movement felt slippery which did not match the precise bullets that were used for attacking.
+
+To address the issues with the upgrade menu we made it so the player scrolls through their options to select their upgrade as opposed to pressing a different button for each stat. This was more intuitive and allowed us to remove some instructional text from the screen.
+
+Health bars were added so players could see how much health they had left.
+
+To make speed and jump upgrades more meaningful, we changed the stage to be larger and have more verticality. This also lead us to change to a moving camera from a fixed one. Furthermore, we lowered the base values of these statistics and lessened how much one upgrade increased these statistics. This made the upgrades more impactful as they now actually provide the player with a maneuverability advantage rather than making them jump absurdly high or move absurdly fast to the point that it was detrimental.
+
+We removed health upgrades so that players would not cancel each other's decisions. This also allowed us to control the pace of the game more easily, as health upgrades made rounds take much longer.
+
+We changed from a small, two-directional bullet attack to a large, melee strike. This change made the attack system a better match with our slippery and fast movement.

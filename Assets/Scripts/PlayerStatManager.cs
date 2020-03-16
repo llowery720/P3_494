@@ -29,7 +29,7 @@ public class PlayerStatManager: MonoBehaviour
             playerStats = new PlayerStatistics[4];
 
             for(int i = 0; i < 4; i++) {
-                playerStats[i] = new PlayerStatistics(3, 5, 2.5f, 3f, 3);
+                playerStats[i] = new PlayerStatistics(3, 5, 3f, 4f, 3);
             }
             DontDestroyOnLoad(gameObject);
         } 

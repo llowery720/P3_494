@@ -52,8 +52,8 @@ public class PlayerController : MonoBehaviour
         if (true)
         {
             //!collision.gameObject.CompareTag("Jumpable")
-            Debug.Log(collision.gameObject.tag);
-            Debug.Log(collision.gameObject.name);
+            // Debug.Log(collision.gameObject.tag);
+            // Debug.Log(collision.gameObject.name);
 
         }
         if (collision.gameObject.CompareTag("InstaDeath"))

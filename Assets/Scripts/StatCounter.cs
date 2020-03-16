@@ -26,7 +26,7 @@ public class StatCounter : MonoBehaviour
     int currentPlayer = 0;
 
 
-    private string[] wordBank = new string[3] {"Attack", "Speed", "Jump" };
+    private string[] wordBank = new string[4] { "Health", "Attack", "Speed", "Jump" };
     private int currentIndex = 0;
 
 
@@ -110,7 +110,7 @@ public class StatCounter : MonoBehaviour
 
         if(gamePads.Count == 0 && currentPlayer <= playerCount - 1) {
             KeyActionUpdate(currentPlayer);
-            Debug.Log(currentPlayer);
+            // Debug.Log(currentPlayer);
             UpdateStatText(playerPanels[currentPlayer], currentPlayer);
 
             if(PlayerStatManager.playerStats[currentPlayer].roundBonus == 0) ++currentPlayer;
@@ -126,13 +126,13 @@ public class StatCounter : MonoBehaviour
             currentIndex--;
             if(currentIndex < 0)
             {
-                currentIndex = 2;
+                currentIndex = 3;
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentIndex++;
-            if (currentIndex > 2)
+            if (currentIndex > 3)
             {
                 currentIndex = 0;
             }
@@ -150,12 +150,12 @@ public class StatCounter : MonoBehaviour
             }
             else if (directions.GetComponent<Text>().text.Contains("Speed")) // Increase 
             {
-                PlayerStatManager.playerStats[num].Speed += .5f;
+                PlayerStatManager.playerStats[num].Speed++;
                 SubtractRoundPoints(num);
             }
             else if (directions.GetComponent<Text>().text.Contains("Jump"))
             {
-                PlayerStatManager.playerStats[num].Jump += .5f;
+                PlayerStatManager.playerStats[num].Jump++;
                 SubtractRoundPoints(num);
             }
             else if (directions.GetComponent<Text>().text.Contains("Attack"))

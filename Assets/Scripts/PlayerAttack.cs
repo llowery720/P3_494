@@ -15,8 +15,6 @@ public class PlayerAttack : MonoBehaviour
     public float reloadTime = 5f;
     public float attackRate, swingDuration;
 
-    public bool beingKnocked = false;
-
     bool isReloading = false, isSwinging = false;
 
     private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
@@ -32,10 +30,10 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isReloading || beingKnocked)
+        if (isReloading)
             return;
 
-        if ((playerNum == 1 && Input.GetKey(KeyCode.Semicolon)) || (playerNum == 2 && Input.GetKey(KeyCode.B))) {
+        if ((playerNum == 1 && Input.GetKeyDown(KeyCode.Period)) || (playerNum == 2 && Input.GetKeyDown(KeyCode.B))) {
             //ShootForward();
             StartCoroutine(SwingForward());
         }
@@ -68,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
         if (!sr.flipX)
         {
             GameObject shot = Instantiate(projectile, firePoint.position + Vector3.right * 0.25f, firePoint.rotation);
+            shot.GetComponent<SpriteRenderer>().flipX = false;
             Rigidbody rb = shot.GetComponent<Rigidbody>();
             rb.velocity = firePoint.right * speed;
         }
@@ -88,19 +87,21 @@ public class PlayerAttack : MonoBehaviour
     }
 
     IEnumerator SwingForward() {
-        StartCoroutine(Reload());
-
+        // Debug.Log("aya");
         isSwinging = true;
         GameObject swing;
         if(!sr.flipX) {
             swing = Instantiate(weapon, firePoint.position + Vector3.right * 0.25f, firePoint.rotation);
+            swing.GetComponent<SpriteRenderer>().flipX = false;
         }
         else {
             swing = Instantiate(weapon, firePoint.position + Vector3.left * 0.25f, firePoint.rotation);
+            swing.GetComponent<SpriteRenderer>().flipX = true;
         }
         swing.transform.parent = transform;
         yield return new WaitForSeconds(swingDuration);
         Destroy(swing);
+        // Debug.Log("yeet");
 
         isSwinging = false;
     }
