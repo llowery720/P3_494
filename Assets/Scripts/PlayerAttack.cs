@@ -86,7 +86,8 @@ public class PlayerAttack : MonoBehaviour
     }
 
     IEnumerator SwingForward() {
-        Debug.Log("aya");
+        StartCoroutine(Reload());
+
         isSwinging = true;
         GameObject swing;
         if(!sr.flipX) {
@@ -98,7 +99,6 @@ public class PlayerAttack : MonoBehaviour
         swing.transform.parent = transform;
         yield return new WaitForSeconds(swingDuration);
         Destroy(swing);
-        Debug.Log("yeet");
 
         isSwinging = false;
     }

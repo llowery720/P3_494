@@ -150,12 +150,12 @@ public class StatCounter : MonoBehaviour
             }
             else if (directions.GetComponent<Text>().text.Contains("Speed")) // Increase 
             {
-                PlayerStatManager.playerStats[num].Speed++;
+                PlayerStatManager.playerStats[num].Speed += .5f;
                 SubtractRoundPoints(num);
             }
             else if (directions.GetComponent<Text>().text.Contains("Jump"))
             {
-                PlayerStatManager.playerStats[num].Jump++;
+                PlayerStatManager.playerStats[num].Jump += .5f;
                 SubtractRoundPoints(num);
             }
             else if (directions.GetComponent<Text>().text.Contains("Attack"))

@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.transform.parent == transform) return;
      	if (other.tag == "Bullet"){
             StartCoroutine(Flash());
             health -= 10;
