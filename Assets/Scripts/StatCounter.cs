@@ -26,7 +26,7 @@ public class StatCounter : MonoBehaviour
     int currentPlayer = 0;
 
 
-    private string[] wordBank = new string[4] { "Health", "Attack", "Speed", "Jump" };
+    private string[] wordBank = new string[3] {"Attack", "Speed", "Jump" };
     private int currentIndex = 0;
 
 
@@ -126,13 +126,13 @@ public class StatCounter : MonoBehaviour
             currentIndex--;
             if(currentIndex < 0)
             {
-                currentIndex = 3;
+                currentIndex = 2;
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentIndex++;
-            if (currentIndex > 3)
+            if (currentIndex > 2)
             {
                 currentIndex = 0;
             }
