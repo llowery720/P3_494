@@ -15,6 +15,8 @@ public class PlayerAttack : MonoBehaviour
     public float reloadTime = 5f;
     public float attackRate, swingDuration;
 
+    public bool beingKnocked = false;
+
     bool isReloading = false, isSwinging = false;
 
     private List<Gamepad> gamePads = new List<Gamepad>(Gamepad.all);
@@ -30,10 +32,10 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isReloading)
+        if (isReloading || beingKnocked)
             return;
 
-        if ((playerNum == 1 && Input.GetKeyDown(KeyCode.Period)) || (playerNum == 2 && Input.GetKeyDown(KeyCode.B))) {
+        if ((playerNum == 1 && Input.GetKey(KeyCode.Semicolon)) || (playerNum == 2 && Input.GetKey(KeyCode.B))) {
             //ShootForward();
             StartCoroutine(SwingForward());
         }
