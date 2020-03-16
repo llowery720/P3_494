@@ -36,7 +36,8 @@ public class PlayerRun : MonoBehaviour
     }
 
     void Start(){
-        moveSpeed = PlayerStatManager.playerStats[playerNum - 1].Speed;
+        moveSpeed = 3 * Mathf.Log(PlayerStatManager.playerStats[playerNum - 1].Speed);
+        
     }
 
     void Update() {

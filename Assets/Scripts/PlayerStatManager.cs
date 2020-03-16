@@ -29,7 +29,7 @@ public class PlayerStatManager: MonoBehaviour
             playerStats = new PlayerStatistics[4];
 
             for(int i = 0; i < 4; i++) {
-                playerStats[i] = new PlayerStatistics(3, 5, 3f, 4f, 3);
+                playerStats[i] = new PlayerStatistics(5, 5, 3f, 4f, 3);
             }
             DontDestroyOnLoad(gameObject);
         } 
@@ -52,6 +52,16 @@ public class PlayerStatManager: MonoBehaviour
             Jump = j;
             Speed = s;
             roundBonus = rb;
+            Wins = 0;
+        }
+
+        public void Reset()
+        {
+            Health = 5;
+            Attack = 5;
+            Jump = 3;
+            Speed = 4;
+            roundBonus = 3;
             Wins = 0;
         }
     }

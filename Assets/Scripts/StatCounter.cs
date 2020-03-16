@@ -26,7 +26,7 @@ public class StatCounter : MonoBehaviour
     int currentPlayer = 0;
 
 
-    private string[] wordBank = new string[4] { "Health", "Attack", "Speed", "Jump" };
+    private string[] wordBank = new string[3] {"Attack", "Speed", "Jump" };
     private int currentIndex = 0;
 
 
@@ -52,7 +52,7 @@ public class StatCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameOver && Input.GetKeyDown(KeyCode.Space)) {
+        if(gameOver && Input.GetKeyDown(KeyCode.Return)) {
             Reset();
         }
 
@@ -116,6 +116,8 @@ public class StatCounter : MonoBehaviour
             if(PlayerStatManager.playerStats[currentPlayer].roundBonus == 0) ++currentPlayer;
             return;
         }
+
+
     }
 
     // Takes in an integer value corresponding to a controller and queries the gamepad for button presses
@@ -126,13 +128,13 @@ public class StatCounter : MonoBehaviour
             currentIndex--;
             if(currentIndex < 0)
             {
-                currentIndex = 3;
+                currentIndex = 2;
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentIndex++;
-            if (currentIndex > 3)
+            if (currentIndex > 2)
             {
                 currentIndex = 0;
             }
@@ -143,12 +145,12 @@ public class StatCounter : MonoBehaviour
 
         if (PlayerStatManager.playerStats[num].roundBonus > 0 && (Input.GetKeyDown(KeyCode.Space)))
         {
-            if (directions.GetComponent<Text>().text.Contains("Health")) // Increase Health
-            {
-                PlayerStatManager.playerStats[num].Health++;
-                SubtractRoundPoints(num);
-            }
-            else if (directions.GetComponent<Text>().text.Contains("Speed")) // Increase 
+            //if (directions.GetComponent<Text>().text.Contains("Health")) // Increase Health
+            //{
+            //    PlayerStatManager.playerStats[num].Health++;
+            //    SubtractRoundPoints(num);
+            //}
+            if (directions.GetComponent<Text>().text.Contains("Speed")) // Increase 
             {
                 PlayerStatManager.playerStats[num].Speed++;
                 SubtractRoundPoints(num);
@@ -186,10 +188,10 @@ public class StatCounter : MonoBehaviour
             {
                 childLabelField.text = "P" + (num + 1).ToString() + ": " + PlayerStatManager.playerStats[num].Wins + "W";
             }
-            else if (child.name == "Health")
-            {
-                childLabelField.text = "Health: " + PlayerStatManager.playerStats[num].Health;
-            }
+            //else if (child.name == "Health")
+            //{
+            //    childLabelField.text = "Health: " + PlayerStatManager.playerStats[num].Health;
+            //}
             else if (child.name == "Attack")
             {
                 childLabelField.text = "Attack: " + PlayerStatManager.playerStats[num].Attack;
@@ -225,7 +227,7 @@ public class StatCounter : MonoBehaviour
         }
         directions.SetActive(false);
         winText.SetActive(true);
-        winText.GetComponent<Text>().text = "Player " + playerNum + " Wins!\n\'Space\' to restart";
+        winText.GetComponent<Text>().text = "Player " + playerNum + " Wins!\n\'Enter\' to restart";
     }
 
     void Reset() {
@@ -237,7 +239,13 @@ public class StatCounter : MonoBehaviour
         gameOver = false;
 
         for(int i = 0; i < 4; i++) {
-                PlayerStatManager.playerStats[i] = new PlayerStatManager.PlayerStatistics(3, 5, 3f, 4f, 3);
+            // PlayerStatManager.playerStats[i] = new PlayerStatManager.PlayerStatistics(5, 5, 3f, 4f, 3);
+            PlayerStatManager.playerStats[i].Reset();
+        }
+
+        for (int i = 0; i < playerPanels.Length; i++)
+        {
+            UpdateStatText(playerPanels[i], i);
         }
     }
 }

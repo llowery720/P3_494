@@ -23,7 +23,7 @@ public class CameraToCharacters : MonoBehaviour
         {
             Vector3 pos = gameObject.transform.position;
             pos.x = (player1.transform.position.x + player2.transform.position.x) / 2;
-            pos.y = (player1.transform.position.y + player2.transform.position.y) / 2 + 1.25f;
+            pos.y = (player1.transform.position.y + player2.transform.position.y) / 2 + .15f;
             gameObject.transform.position = pos;
         }
         
